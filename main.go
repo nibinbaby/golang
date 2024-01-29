@@ -4,6 +4,8 @@ import "fmt"
 
 func main() {
 
-	fmt.Println("hello, ninjas")
+	myBill := newBill("marios bill")
+
+	fmt.Println(myBill)
 
 }
