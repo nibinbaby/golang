@@ -12,7 +12,7 @@ type bill struct {
 func newBill(name string) bill {
 	b := bill{
 		name:  name,
-		items: map[string]float64{"pie": 6.99, "cake": 3.99},
+		items: map[string]float64{},
 		tip:   0,
 	}
 	return b
@@ -20,7 +20,7 @@ func newBill(name string) bill {
 
 // format the bill
 
-func (b bill) format() string { // the first (..) defines the object to which this func is associated with
+func (b *bill) format() string { // the first (..) defines the object to which this func is associated with
 	fs := "Bill breakdown: \n"
 	var total float64 = 0
 
@@ -30,8 +30,22 @@ func (b bill) format() string { // the first (..) defines the object to which th
 		total += v
 	}
 
+	// add tip
+	fs += fmt.Sprintf("%-25v ... $%0.2f \n", "tip:", b.tip)
+	total += b.tip
 	// total
 	fs += fmt.Sprintf("%-25v ... $%0.2f", "total:", total)
 
 	return fs
+}
+
+// update tip
+func (b *bill) updateTip(tip float64) { // to update the origingal item we use pointer
+	//(*b).tip = tip // optional, go automatically does the dereferencing
+	b.tip = tip
+}
+
+// add item
+func (b bill) addItem(name string, price float64) {
+	b.items[name] = price
 }
